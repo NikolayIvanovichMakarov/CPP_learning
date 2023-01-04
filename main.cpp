@@ -1,17 +1,17 @@
-
-class RuleOfThree 
+#include <utility>
+class RuleOfFive 
 {
 public:
-	RuleOfThree() :_simpleValue(5)
+	RuleOfFive() :_simpleValue(5)
 	{
 	}
 	// 1. copy constructor
-	RuleOfThree(const RuleOfThree& rot) : _simpleValue(rot._simpleValue)
+	RuleOfFive(const RuleOfFive& rot) : _simpleValue(rot._simpleValue)
 	{
 	}
 
 	// 2. copy assignment operator
-	RuleOfThree& operator=(const RuleOfThree& rot)
+	RuleOfFive& operator=(const RuleOfFive& rot)
 	{
 		if (this != &rot)
 			_simpleValue = rot._simpleValue;
@@ -19,8 +19,27 @@ public:
 	}
 
 	// 3. destructor
-	~RuleOfThree()
+	~RuleOfFive()
 	{
+	}
+
+
+	// move constructor
+	RuleOfFive(const RuleOfFive&& rof) noexcept
+	{
+		_simpleValue = rof._simpleValue;	
+	}
+
+	// move assignment
+	RuleOfFive& operator=(const RuleOfFive&& rof) noexcept
+	{
+		// self-asignment check
+		if (this != &rof)
+		{
+			_simpleValue = rof._simpleValue;
+		}
+
+		return *this;
 	}
 private:
 	int _simpleValue;
@@ -29,9 +48,10 @@ private:
 
 int main() 
 {
-	RuleOfThree r;		// default constructor
-	RuleOfThree r2 = r; // copy constructor
+	RuleOfFive r;		// default constructor
+	RuleOfFive r2 = r;	// copy constructor
 	r = r2;				// copy assignment operator
-
+	RuleOfFive r3 = std::move(r2);	// move constructor
+	r3 = std::move(r2);				// move assigment operator
 	return 0;
 }
