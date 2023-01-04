@@ -1,35 +1,37 @@
-#include <iostream>
-#include <vector>
 
-/*set the value of TEST_EXPLICIT equal "1" and see explicit test*/
-#define TEST_EXPLICIT 0
-
-class ExplicitTest
+class RuleOfThree 
 {
 public:
-	int a;
-	ExplicitTest() : a(0)
+	RuleOfThree() :_simpleValue(5)
 	{
-		std::cout << "Explicit()" << std::endl;
 	}
-#if (TEST_EXPLICIT == 1)
-	explicit
-#endif
-	ExplicitTest(int _a) : a(_a)
+	// 1. copy constructor
+	RuleOfThree(const RuleOfThree& rot) : _simpleValue(rot._simpleValue)
 	{
-		std::cout << "Explicit(int _a)" << std::endl;
 	}
-	~ExplicitTest()
+
+	// 2. copy assignment operator
+	RuleOfThree& operator=(const RuleOfThree& rot)
 	{
-		std::cout << "~Explicit()" << std::endl;
+		if (this != &rot)
+			_simpleValue = rot._simpleValue;
+		return *this;
 	}
+
+	// 3. destructor
+	~RuleOfThree()
+	{
+	}
+private:
+	int _simpleValue;
 };
  
 
 int main() 
 {
-	ExplicitTest et = 1; // works only if 
-
+	RuleOfThree r;		// default constructor
+	RuleOfThree r2 = r; // copy constructor
+	r = r2;				// copy assignment operator
 
 	return 0;
 }
