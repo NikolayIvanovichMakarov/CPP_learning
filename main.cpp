@@ -1,57 +1,64 @@
 #include <utility>
-class RuleOfFive 
+#include <iostream>
+
+class RuleOfZero
 {
 public:
-	RuleOfFive() :_simpleValue(5)
+	void SetA(int a)
 	{
+		_a = a;
 	}
-	// 1. copy constructor
-	RuleOfFive(const RuleOfFive& rot) : _simpleValue(rot._simpleValue)
+	void SetB(int b)
 	{
+		_b = b;
 	}
-
-	// 2. copy assignment operator
-	RuleOfFive& operator=(const RuleOfFive& rot)
+	int getA() const
 	{
-		if (this != &rot)
-			_simpleValue = rot._simpleValue;
-		return *this;
+		return _a;
 	}
-
-	// 3. destructor
-	~RuleOfFive()
+	int getB() const
 	{
+		return _b;
 	}
+public:
+	RuleOfZero() = default;
+   
+   	RuleOfZero(RuleOfZero const& inRuleOfZero) = default;
+   	RuleOfZero& operator=(RuleOfZero const& inRuleOfZero) = default;
+   
+ 	RuleOfZero(RuleOfZero&& inRuleOfZero) = default;
+   	RuleOfZero& operator=(RuleOfZero&& inRuleOfZero) = default;
+   
+	~RuleOfZero() = default;
 
-
-	// move constructor
-	RuleOfFive(const RuleOfFive&& rof) noexcept
-	{
-		_simpleValue = rof._simpleValue;	
-	}
-
-	// move assignment
-	RuleOfFive& operator=(const RuleOfFive&& rof) noexcept
-	{
-		// self-asignment check
-		if (this != &rof)
-		{
-			_simpleValue = rof._simpleValue;
-		}
-
-		return *this;
-	}
 private:
-	int _simpleValue;
+	int _a,_b;
 };
- 
+
+void PrintROZ(const RuleOfZero& roz)
+{
+	std::cout << "a = " << roz.getA() << " b = " << roz.getB() << std::endl;
+}
 
 int main() 
 {
-	RuleOfFive r;		// default constructor
-	RuleOfFive r2 = r;	// copy constructor
-	r = r2;				// copy assignment operator
-	RuleOfFive r3 = std::move(r2);	// move constructor
-	r3 = std::move(r2);				// move assigment operator
+	RuleOfZero r1;
+
+	r1.SetA(3);
+	r1.SetB(4);
+	
+	std::cout << "r1 "; 
+	PrintROZ(r1);
+
+	RuleOfZero r2;
+
+	std::cout << "r2 "; 
+	PrintROZ(r2);
+
+	RuleOfZero r3 = r1;
+	std::cout << "r3 "; 
+	PrintROZ(r3);
+
+
 	return 0;
 }
