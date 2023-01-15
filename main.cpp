@@ -1,64 +1,40 @@
 #include <utility>
 #include <iostream>
 
-class RuleOfZero
+class MutableExample 
 {
 public:
-	void SetA(int a)
+	int GetValue() 
 	{
-		_a = a;
+		return value;
 	}
-	void SetB(int b)
+	int GetConstValue() const 
 	{
-		_b = b;
+		constValue = 3;
+		return constValue;
 	}
-	int getA() const
+	void SetValue(int value) 
 	{
-		return _a;
+		this->value = value;
 	}
-	int getB() const
+	void SetConstValue(int constValue) const 
 	{
-		return _b;
+		this->constValue = constValue;
 	}
 public:
-	RuleOfZero() = default;
-   
-   	RuleOfZero(RuleOfZero const& inRuleOfZero) = default;
-   	RuleOfZero& operator=(RuleOfZero const& inRuleOfZero) = default;
-   
- 	RuleOfZero(RuleOfZero&& inRuleOfZero) = default;
-   	RuleOfZero& operator=(RuleOfZero&& inRuleOfZero) = default;
-   
-	~RuleOfZero() = default;
 
 private:
-	int _a,_b;
+	int value;
+	mutable int constValue;
 };
-
-void PrintROZ(const RuleOfZero& roz)
-{
-	std::cout << "a = " << roz.getA() << " b = " << roz.getB() << std::endl;
-}
 
 int main() 
 {
-	RuleOfZero r1;
+	const MutableExample me{};
+	// me.SetValue(3); // Îøèáêà 
+ 	me.SetConstValue(4);
 
-	r1.SetA(3);
-	r1.SetB(4);
-	
-	std::cout << "r1 "; 
-	PrintROZ(r1);
-
-	RuleOfZero r2;
-
-	std::cout << "r2 "; 
-	PrintROZ(r2);
-
-	RuleOfZero r3 = r1;
-	std::cout << "r3 "; 
-	PrintROZ(r3);
-
+	std::cout << "value = " << /* me.GetValue() Îøèáêà << */ " const = " << me.GetConstValue() << std::endl;
 
 	return 0;
 }
