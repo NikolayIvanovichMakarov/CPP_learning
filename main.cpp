@@ -1,40 +1,30 @@
-#include <utility>
+#include <iomanip>
 #include <iostream>
+#include <vector>
 
-class MutableExample 
+void print_vec(const std::vector<int>& myvec) 
 {
-public:
-	int GetValue() 
+	for (const auto& i : myvec) 
 	{
-		return value;
+		std::cout << i << " ";
 	}
-	int GetConstValue() const 
-	{
-		constValue = 3;
-		return constValue;
-	}
-	void SetValue(int value) 
-	{
-		this->value = value;
-	}
-	void SetConstValue(int constValue) const 
-	{
-		this->constValue = constValue;
-	}
-public:
+	std::cout << std::endl;
+}
 
-private:
-	int value;
-	mutable int constValue;
-};
+void inc_vec(std::vector<int>& myvec) 
+{
+	for (auto& i : myvec)
+	{
+		++i;
+	}
+}
 
 int main() 
 {
-	const MutableExample me{};
-	// me.SetValue(3); // Ошибка 
- 	me.SetConstValue(4);
-
-	std::cout << "value = " << /* me.GetValue() Ошибка << */ " const = " << me.GetConstValue() << std::endl;
+	std::vector<int> myvec = {0,4,5,6,7,8,9,1,2,3};
+	print_vec(myvec);
+	inc_vec(myvec);
+	print_vec(myvec);
 
 	return 0;
 }
