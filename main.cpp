@@ -1,30 +1,14 @@
-#include <iomanip>
+#include <memory>
 #include <iostream>
-#include <vector>
+#include <utility>
 
-void print_vec(const std::vector<int>& myvec) 
+auto myFunction() 
 {
-	for (const auto& i : myvec) 
-	{
-		std::cout << i << " ";
-	}
-	std::cout << std::endl;
+	return 1;
 }
 
-void inc_vec(std::vector<int>& myvec) 
+int main()
 {
-	for (auto& i : myvec)
-	{
-		++i;
-	}
-}
-
-int main() 
-{
-	std::vector<int> myvec = {0,4,5,6,7,8,9,1,2,3};
-	print_vec(myvec);
-	inc_vec(myvec);
-	print_vec(myvec);
-
+	int a = myFunction();
 	return 0;
 }
